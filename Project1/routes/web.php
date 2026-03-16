@@ -36,6 +36,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('anshu');
 // });
 
+// Direct view without any function
+// Route::view('/anshu', 'student');
+
 
 // Data come from UserControllers
 // use App\Http\Controllers\UserController;
@@ -72,10 +75,145 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-// Data from Controller
-use App\Http\Controllers\studentController;
-Route::get('/students', [studentController::class, 'student']);
+// // Data from Controller
+// use App\Http\Controllers\studentController;
+// Route::get('/students', [studentController::class, 'student']);
 
-Route::get('/course/{course?}', [studentController::class, 'course']);
+// Route::get('/course/{course?}', [studentController::class, 'course']);
 
-Route::get('/student/{name?}', [studentController::class, 'studentname']);
+// Route::get('/student/{name?}', [studentController::class, 'studentname']);
+
+// ======================================================================================== 16/03/2026
+
+// Make Simple Response in API
+// Route::get('/', function(){
+//     return response("Radhe Radhe!!");
+// });
+
+// Make Header response in API
+// Route::get('/', function(){
+//     return response("Radhe Radhe!!")
+//     ->header('Content-Type', 'text/plain')
+//     ->header('X-Custom-Header', 'Laravel');
+// });
+
+// // Make JSON response on API
+// Route::get('/json', function(){
+//     return response()->json([
+//         'name'=>'Anshuman',
+//         'Class'=>'10th',
+//         'Subject'=>'Laravel',
+//     ]);
+// });
+
+
+// =====================================================================================
+
+
+// /set-cookie   → Cookie created
+//       ↓
+// Browser stores cookie
+//       ↓
+// /get-cookie   → Cookie read
+
+
+// Set the Cookies
+// Route::get('/set-cookie', function(){
+//     return response("Cookies Set")
+//     // cookie(name, value, minutes)
+//     //  Parameter	Meaning
+//     // 'username'	Cookie name
+//     // 'Anshu'	Cookie value
+//     ->cookie('username', 'Anshu', 1 );
+// });
+
+// // Get cookies by name
+// Route::get('/get-cookie', function(Illuminate\Http\Request $request){
+//     return $request ->cookie('username');
+// });
+
+// use Illuminate\Http\Request;
+// Route::get('/get-cookie', function(Request $request){
+//     return $request->cookie('username');
+// });
+
+// Route::get('/get-cookie', function () {
+//     return response("Cookies Get")
+//     ->cookie('username');
+// });
+
+
+// ==================================================================================
+
+// Apply Redirect 
+// User → /login  
+// Login success  
+//       ↓  
+// Redirect → /dashboard
+
+// Route::get('/dashboard', function(){
+//     return "This is my Dashboard Page";
+// });
+
+
+// Redirect with message as Login Successful
+Route::get('/dashboard', function(){
+    return view('dashboard');
+});
+
+// Route::get('/home', function(){
+//     return redirect('/dashboard')->with('success','Login Successful');
+// });
+
+// Route::get('/old-dashboard', function(){
+//     return "Old Dashboard";
+// });
+
+// Route::get('/new-dashboard', function(){
+//     return "New Dashboard";
+// })->name('dashboard');
+
+// Route::get('/new-dashboard', function(){
+//     return view('dashboard');
+// })->name('dashboard');
+
+
+// Route::get('/login', function(){
+//     return redirect('/old-dashboard')
+//     ->with('success', 'Login Successful');
+// });
+
+// Route::get('/login', function(){
+//     return redirect()->route('dashboard');
+// });
+
+
+// Redirect Type        	            Use
+// redirect('/page')	            Go to another URL
+// redirect()->route()	            Redirect using route name
+// redirect()->back()	            Go back to previous page
+// redirect()->with()	            Redirect with message
+// ->name('dashboard')              Route name
+
+// ========================================================================
+
+// Route::get('/login/{email?}/{pass?}', function($email="abc@123"){
+//        return view('login',['email'=>$email]);
+// });
+
+// Route::get('/', function(){
+//     return redirect('/login')->with('success','Login Successful');
+// });
+
+Route::get('/login', function(){
+    
+    $email = request('email');
+    $password = request('password');
+
+    if($email == "admin@gmail.com" && $password == "123"){
+        return redirect()->route('dashboard')
+            ->with('success','Login Successfull');
+    }
+
+    return redirect()->back();
+});
