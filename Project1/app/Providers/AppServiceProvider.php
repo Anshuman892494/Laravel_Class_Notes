@@ -20,8 +20,14 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+    // public function boot(): void
+    // {
+    //     View::share('siteName','My Laravel Website');
+    // }
+
+    // For Global Name of School
     public function boot(): void
     {
-        View::share('siteName','My Laravel Website');
+        View::share('schoolName','LPU');
     }
 }

@@ -1,6 +1,17 @@
 <?php
 
+/*
+    Workflow
+    Index.php ->  kernal call bootstrap App.php -> middleware -> Route(Web.php) -> Controller -> Response View then all
+*/
+
+
+
+// Imports
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\studentController;
+
+// ==========================================================================
 // Route::get('/', function () {
 //     return view('dashboard');
 // });
@@ -63,7 +74,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-// use App\Http\Controllers\studentController;
 // Route::get('/students', [studentController::class, 'show']);
 
 // Route::get('/student/{name?}', function($name="N/A"){
@@ -84,6 +94,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/student/{name?}', [studentController::class, 'studentname']);
 
 // ======================================================================================== 16/03/2026
+
+// JSON Response
 
 // Make Simple Response in API
 // Route::get('/', function(){
@@ -109,6 +121,7 @@ use Illuminate\Support\Facades\Route;
 
 // =====================================================================================
 
+// Attaching Cookies
 
 // /set-cookie   → Cookie created
 //       ↓
@@ -118,6 +131,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Set the Cookies
+
 // Route::get('/set-cookie', function(){
 //     return response("Cookies Set")
 //     // cookie(name, value, minutes)
@@ -128,11 +142,14 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // // Get cookies by name
+
 // Route::get('/get-cookie', function(Illuminate\Http\Request $request){
 //     return $request ->cookie('username');
 // });
 
+
 // use Illuminate\Http\Request;
+
 // Route::get('/get-cookie', function(Request $request){
 //     return $request->cookie('username');
 // });
@@ -205,15 +222,65 @@ Route::get('/dashboard', function(){
 //     return redirect('/login')->with('success','Login Successful');
 // });
 
-Route::get('/login', function(){
+
+// Error
+// Route::get('/login', function(){
     
-    $email = request('email');
-    $password = request('password');
+//     $email = request('email');
+//     $password = request('password');
 
-    if($email == "admin@gmail.com" && $password == "123"){
-        return redirect()->route('dashboard')
-            ->with('success','Login Successfull');
-    }
+//     if($email == "admin@gmail.com" && $password == "123"){
+//         return redirect()->route('dashboard')
+//             ->with('success','Login Successfull');
+//     }
 
-    return redirect()->back();
-});
+//     return redirect()->back();
+// });
+
+// ===============================================================================================19/03
+
+// Redirect To Controller
+
+// Route::get('/studentController', [studentController::class, 'student']); //Make the specific route for controller
+
+// Route::get('/go', function(){
+//     return redirect()->action([studentController::class, 'student']); //redirect from /go to /ab by using action to controller
+// });
+
+
+// Example 1
+
+// Route::get('/studentprofie', function(){
+//     return view('studentprofile');
+// });
+
+
+// Data come from UserControllers
+Route::get('/student-profile/{id?}/{name?}', [studentController::class, 'profile']);
+
+
+// Example 2
+// Route::get('/product/{id?}', function(){
+//     return view('product');
+// });
+
+// Route::get('/product', function(){
+//     return view('product');
+// })->name('product');
+
+
+use App\Http\Controllers\productController;
+// Route::get('/product/{id?}', [productController::class, 'product']);
+
+Route::get('/product/{id?}', [ProductController::class, 'product'])
+    ->name('product');
+
+
+
+
+
+/* 
+===============================================================================
+UNIT 3 - 
+===============================================================================
+*/
