@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckUser
+class CheckCourse
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class CheckUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-            if($request->name==='user'){
+        if($request->name==='laravel'){
             return $next($request);
         }
-        return response('Unauthorized Access');
+        return response('Course not found');
     }
 }
