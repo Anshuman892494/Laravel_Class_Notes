@@ -1,22 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\CourseController;
-use App\Http\Middleware\CheckUser;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', [StudentController::class, 'profile'])
-->middleware('check.user');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/course', [CourseController::class, 'course']);
-// ->middleware('check.course');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// Route::get('/test', function () {
-//     return "Welcome Anshu";
-// })->middleware(\App\Http\Middleware\CheckUser::class);
-
-Route::get('/content', [StudentController::class, 'content']);
+require __DIR__.'/auth.php';

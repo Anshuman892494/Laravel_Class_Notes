@@ -1,2 +1,10 @@
+<style>
+    .head{
 
-<h1>Header</h1>
+    }
+</style>
+<div>
+
+    <h1>Header</h1>
+
+</div>

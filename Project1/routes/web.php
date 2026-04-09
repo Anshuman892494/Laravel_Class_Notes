@@ -188,7 +188,7 @@ Route::get('/dashboard', function(){
 
 // Route::get('/new-dashboard', function(){
 //     return "New Dashboard";
-// })->name('dashboard');
+// })->name('dashboard');   
 
 // Route::get('/new-dashboard', function(){
 //     return view('dashboard');

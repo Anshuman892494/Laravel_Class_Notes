@@ -7,7 +7,7 @@
 </head>
 <body>
     
-<h1>Student Name: {{$name}}</h1>
+<h1>Called using Named route</h1>
 
 </body>
 </html>
