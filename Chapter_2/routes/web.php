@@ -1,3 +1,9 @@
+/* 
+===============================================================================
+UNIT 3 - 
+=============================================================================== 23/03
+*/
+
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -7,6 +13,43 @@ use Illuminate\http\request;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// RESOURCE CONTROLLER
+// use App\Http\Controllers\ProductsController;
+// Route::get('/index', [ProductsController::class, 'index']); //from Index() function 
+// Route::get('/create', [ProductsController::class, 'create']); //from Create() function 
+// Route::get('/show', [ProductsController::class, 'show']); //from Show() function
+// Route::get('/edit', [ProductsController::class, 'edit']); //from Edit() function
+
+// Route::resource('product', ProductsController::class); //Resource Controller
+
+
+// API CONTROLLER
+// use App\Http\Controllers\BookController;
+// Route::get('/books', [BookController::class, 'index']); //Default
+// Route::post('/books', [BookController::class, 'store']);
+// Route::get('/books/{id}', [BookController::class, 'show']);
+// Route::put('/books/{id}', [BookController::class, 'update']);
+// Route::delete('/books/{id}', [BookController::class, 'destroy']);
+
+// Route::apiResource('books', BookController::class); //Api controller
+
+
+// SINGLE ACTION CONTROLLER
+// use App\Http\Controllers\ActionController;
+// Route::get('/action/{id?}/{name?}', ActionController::class);
+
+// Example
+
+// use App\Http\Controllers\LoginController;
+// use App\Http\Controllers\CourseController;
+// use App\Http\Controllers\MoviesController;
+
+// Route::get('/login/{username?}/{pass?}', LoginController::class);//Single Action Controller
+// Route::apiResource('/course', CourseController::class); //Api controller
+// Route::Resource('/movies', MoviesController::class); //Resource controller
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -36,7 +79,7 @@ Route::domain('anshu.com')->group(function(){
         // return url()->current();
         return [
             'path'=>$request->path(),
-            'current'=>url()->current(),
+            'current'=>url()->current(),    
             'full'=>url()->full(),
             'previous'=>url()->previous()
         ];

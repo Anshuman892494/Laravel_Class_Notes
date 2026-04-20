@@ -10,13 +10,13 @@ class studentController extends Controller
     //     return view('student');
     // }
 
-    // public function course($course="No Course Selected"){
-    //     return view('course', ['course'=>$course ]);
-    // }
+    public function course($course="No Course Selected"){
+        return view('course', ['course'=>$course ]);
+    }
 
-    // public function studentname($name="Anshu"){
-    //     return view('studentname', ['name'=>$name ]);
-    // }
+    public function studentname($name="Anshu"){
+        return view('studentname', ['name'=>$name ]);
+    }
 
     // public function profile($name="Anshu"){
     //     return view('studentprofile', ['name'=>$name ]);

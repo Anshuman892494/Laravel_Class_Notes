@@ -36,6 +36,7 @@ use App\Http\Controllers\studentController;
 //     return 'User ID:'.$id;
 // });
 
+
 // To print specifc name on page
 // Route::get('/name', function(){
 //     $name = 'Radhe';
@@ -57,7 +58,6 @@ use App\Http\Controllers\studentController;
 
 // use App\Http\Controllers\AnshuController;
 // Route::get('/anshu', [AnshuController::class, 'show']);
-
 
 
 // Route::prefix('admin')->group(function(){
@@ -178,9 +178,10 @@ Route::get('/dashboard', function(){
     return view('dashboard');
 });
 
-// Route::get('/home', function(){
-//     return redirect('/dashboard')->with('success','Login Successful');
-// });
+Route::get('/home', function(){
+    return redirect('/dashboard')
+    ->with('success','Login Successful');
+});
 
 // Route::get('/old-dashboard', function(){
 //     return "Old Dashboard";
@@ -201,7 +202,8 @@ Route::get('/dashboard', function(){
 // });
 
 // Route::get('/login', function(){
-//     return redirect()->route('dashboard');
+//     return redirect()
+//     ->route('dashboard');
 // });
 
 
