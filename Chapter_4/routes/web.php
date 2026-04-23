@@ -88,19 +88,19 @@ Route::domain('anshu.com')->group(function(){
 
 
     // in one return
-    return[
-        'except'=> $request->except(['age, course']),
-        'only'=> $request->only(['age, course']),
-        'all'=> $request->all(),
-        'using-input'=> $request->input('name'),
-        'course'=> $request->course,
-        'filled'=> $request->filled('name')? 'Filled':'Not filled',
-        'has'=> $request->has('name')? 'Input Name Exist':'Doed not exist',
-        'isMethod'=> $request->isMethod('post')?'Post':'Get',
-        'default-value'=> $request->input('age', 23),
-        'using-query'=> $request->query('name'),
-        'headers'=> $request->header('Authorization'),
-    ];
+    // return[
+    //     'except'=> $request->except(['age, course']),
+    //     'only'=> $request->only(['age, course']),
+    //     'all'=> $request->all(),
+    //     'using-input'=> $request->input('name'),
+    //     'course'=> $request->course,
+    //     'filled'=> $request->filled('name')? 'Filled':'Not filled',
+    //     'has'=> $request->has('name')? 'Input Name Exist':'Doed not exist',
+    //     'isMethod'=> $request->isMethod('post')?'Post':'Get',
+    //     'default-value'=> $request->input('age', 23),
+    //     'using-query'=> $request->query('name'),
+    //     'headers'=> $request->header('Authorization'),
+    // ];
     
 });
 
@@ -152,3 +152,27 @@ Route::get('/delete-cookie', function () {
 // Set → cookie(name, value, time)
 // Get → Cookie::get(name)
 // Delete → Cookie::forget(name) 
+
+// ====================================================================================== Forms (Uploaded Files) 
+
+
+use App\Http\Controllers\formController;
+
+// Form Route
+Route::get('/show-form', [formController::class, 'showform']);
+Route::post('/submit-form', [formController::class, 'submitform']);
+
+// File Upload Route
+Route::get('/upload-form', [formController::class, 'showuploadform']);
+Route::post('/upload-form', [formController::class, 'uploadform']);
+
+// =================================================================================================== Emails
+
+// Email Route
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AnshuMail;
+
+Route::get('/send-mail', function () {
+    Mail::to('anshuman892494@gmail.com')->send(new AnshuMail());
+    return "Mail Sent";
+});
