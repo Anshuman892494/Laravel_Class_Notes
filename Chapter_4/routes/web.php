@@ -173,6 +173,55 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AnshuMail;
 
 Route::get('/send-mail', function () {
-    Mail::to('anshuman892494@gmail.com')->send(new AnshuMail());
+    Mail::to('ishikaishika1603@gmail.com')->send(new AnshuMail());
     return "Mail Sent";
+});
+
+
+// ================================================================================================= Sessions
+
+// Get Session	session('key')
+// Store Session	session(['key' => 'value'])
+// Delete Session	session()->forget('key')
+// Flash Message	session()->flash()
+// Translate	__('file.key')
+// Change Language	App::setLocale()
+
+
+Route::get('/session', function (Request $request) {
+
+    // store single
+    $request->session()->put('name', 'Anshu');
+
+    // store multiple
+    $request->session()->put([
+        'age' => 12,
+        'section' => 'SO',
+        'lang' => 'en'
+    ]);
+
+    // initialize array
+    $request->session()->put('city', []);
+
+    // push values
+    $request->session()->push('city', 'Ludhiana');
+    $request->session()->push('city', 'Jalandhar');
+
+    // helper method
+    session(['course' => 'PHP']);
+
+    return [
+        'name' => $request->session()->get('name'),
+        'all_data' => $request->session()->all()
+    ];
+});
+
+
+Route::get('/set', function(Request $request){
+    $request->session()->flash('message', 'Data saved successfully!');
+    return redirect('/get');
+});
+
+Route::get('/get', function(Request $request){
+    return $request->session()->get('message');
 });
