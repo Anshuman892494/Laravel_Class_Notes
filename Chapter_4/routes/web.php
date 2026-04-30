@@ -106,76 +106,76 @@ Route::domain('anshu.com')->group(function(){
 
 // =================================================================================
 
-Route::get('/set-cookie', function(){
-    return response("Cookies Set")
-    // cookie(name, value, minutes)
-    //  Parameter	Meaning
-    // 'username'	Cookie name
-    // 'Anshu'	Cookie value
-    ->cookie('username', 'Anshu', 1 );
-});
+// Route::get('/set-cookie', function(){
+//     return response("Cookies Set")
+//     // cookie(name, value, minutes)
+//     //  Parameter	Meaning
+//     // 'username'	Cookie name
+//     // 'Anshu'	Cookie value
+//     ->cookie('username', 'Anshu', 1 );
+// });
 
-// Get cookies by name
-// Method - 1 using Request
-Route::get('/get-cookie', function(Request $request){
-    return $request->cookie('username');
-});
+// // Get cookies by name
+// // Method - 1 using Request
+// Route::get('/get-cookie', function(Request $request){
+//     return $request->cookie('username');
+// });
 
-Route::get('/get-cookie', function () {
-    return response("Cookies Get")
-    ->cookie('username');
-});
+// Route::get('/get-cookie', function () {
+//     return response("Cookies Get")
+//     ->cookie('username');
+// });
 
-// Method - 2 using Facade
-use Illuminate\Support\Facades\Cookie;
-
-Route::get('/get-cookie', function () {
-    return Cookie::get('username');
-});
-
-
-// Delete the cookis
+// // Method - 2 using Facade
 // use Illuminate\Support\Facades\Cookie;
-// Method 1: Cookie::forget() 
-Route::get('/delete-cookie', function () {
-    return response("Cookie Deleted")
-        ->withCookie(Cookie::forget('username'));
-});
 
-// Method 2: Expire manually
-Route::get('/delete-cookie', function () {
-    $cookie = Cookie::make('username', '', -1); // past time
-    return response("Cookie Deleted")
-        ->withCookie($cookie);
-});
-
-// Set → cookie(name, value, time)
-// Get → Cookie::get(name)
-// Delete → Cookie::forget(name) 
-
-// ====================================================================================== Forms (Uploaded Files) 
+// Route::get('/get-cookie', function () {
+//     return Cookie::get('username');
+// });
 
 
-use App\Http\Controllers\formController;
+// // Delete the cookis
+// // use Illuminate\Support\Facades\Cookie;
+// // Method 1: Cookie::forget() 
+// Route::get('/delete-cookie', function () {
+//     return response("Cookie Deleted")
+//         ->withCookie(Cookie::forget('username'));
+// });
 
-// Form Route
-Route::get('/show-form', [formController::class, 'showform']);
-Route::post('/submit-form', [formController::class, 'submitform']);
+// // Method 2: Expire manually
+// Route::get('/delete-cookie', function () {
+//     $cookie = Cookie::make('username', '', -1); // past time
+//     return response("Cookie Deleted")
+//         ->withCookie($cookie);
+// });
 
-// File Upload Route
-Route::get('/upload-form', [formController::class, 'showuploadform']);
-Route::post('/upload-form', [formController::class, 'uploadform']);
+// // Set → cookie(name, value, time)
+// // Get → Cookie::get(name)
+// // Delete → Cookie::forget(name) 
 
-// =================================================================================================== Emails
+// // ====================================================================================== Forms (Uploaded Files) 
 
-// Email Route
-use Illuminate\Support\Facades\Mail;
-use App\Mail\AnshuMail;
 
-Route::get('/send-mail', function () {
-    Mail::to('ishikaishika1603@gmail.com')->send(new AnshuMail());
-    return "Mail Sent";
-});
+// use App\Http\Controllers\formController;
+
+// // Form Route
+// Route::get('/show-form', [formController::class, 'showform']);
+// Route::post('/submit-form', [formController::class, 'submitform']);
+
+// // File Upload Route
+// Route::get('/upload-form', [formController::class, 'showuploadform']);
+// Route::post('/upload-form', [formController::class, 'uploadform']);
+
+// // =================================================================================================== Emails
+
+// // Email Route
+// use Illuminate\Support\Facades\Mail;
+// use App\Mail\AnshuMail;
+
+// Route::get('/send-mail', function () {
+//     Mail::to('ishikaishika1603@gmail.com')->send(new AnshuMail());
+//     return "Mail Sent";
+// });
 
 
 // ================================================================================================= Sessions
@@ -188,40 +188,136 @@ Route::get('/send-mail', function () {
 // Change Language	App::setLocale()
 
 
-Route::get('/session', function (Request $request) {
+// Route::get('/session', function (Request $request) {
 
-    // store single
-    $request->session()->put('name', 'Anshu');
+//     // store single
+//     $request->session()->put('name', 'Anshu');
 
-    // store multiple
-    $request->session()->put([
-        'age' => 12,
-        'section' => 'SO',
-        'lang' => 'en'
-    ]);
+//     // store multiple
+//     $request->session()->put([
+//         'age' => 12,
+//         'section' => 'SO',
+//         'lang' => 'en'
+//     ]);
 
-    // initialize array
-    $request->session()->put('city', []);
+//     // initialize array
+//     $request->session()->put('city', []);
 
-    // push values
-    $request->session()->push('city', 'Ludhiana');
-    $request->session()->push('city', 'Jalandhar');
+//     // push values
+//     $request->session()->push('city', 'Ludhiana');
+//     $request->session()->push('city', 'Jalandhar');
 
-    // helper method
-    session(['course' => 'PHP']);
+//     // helper method
+//     session(['course' => 'PHP']);
 
+//     return [
+//         'name' => $request->session()->get('name'),
+//         'all_data' => $request->session()->all()
+//     ];
+// });
+
+
+// Route::get('/set', function(Request $request){
+//     $request->session()->flash('message', 'Data saved successfully!');
+//     return redirect('/get');
+// });
+
+// Route::get('/get', function(Request $request){
+//     return $request->session()->get('message');
+// });
+
+
+// ===============================================================================================
+
+Route::get('/set', function(Request $request){
+    // $request->session()->now('info', 'Radhe Radhe');    //message is not showing because of NOW function could not work when url get changed
+    $request->session()->flash('info', 'Radhe Radhe');  //now message showing (when we change the NOW function to FLASH function then it work)
+    // return redirect('/now-test');
+    // return view('now');
+});
+
+Route::get('/now-test', function(Request $request){
+    return view('now');
+});
+
+// Function	        Works After Redirect?   	Use Case
+// now()	        ❌ No	                    Same page
+// flash()	        ✅ Yes	                    Redirect
+
+
+
+Route::get('/so', function(Request $request){
     return [
-        'name' => $request->session()->get('name'),
-        'all_data' => $request->session()->all()
+        'get' => $request->session()->get('country'),
+
+        // Passing Parameter        
+        'default-value' => $request->session()->get('domain', 'AB'),
+
+        // Session Helper Method        
+        'session' => $request->session('company-name'),
+
+        // All Method 
+        'all' => $request->session()->all()
+
     ];
 });
 
 
-Route::get('/set', function(Request $request){
-    $request->session()->flash('message', 'Data saved successfully!');
-    return redirect('/get');
+// has() method check karta hai ki key exist karti hai aur value null nahi hai, 
+// jabki exists() method sirf key exist karti hai ya nahi check karta hai, chahe value null ho.
+
+// // has() method
+// session()->put('info', 'Radhe Radhe');
+// session()->has('info'); // ✅ true
+
+// session()->put('info', null);
+// session()->has('info'); // ❌ false
+
+// // exists() method
+// session()->exists('info');
+
+// session()->put('info', null);
+// session()->exists('info'); // ✅ true
+
+Route::get('/session-test', function (Request $request) {
+
+    // Case 1: Normal value
+    $request->session()->put('info', 'Radhe Radhe');
+
+    $has1 = $request->session()->has('info');       // true
+    $exists1 = $request->session()->exists('info'); // true
+
+    // Case 2: Null value
+    $request->session()->put('info', null);
+
+    $has2 = $request->session()->has('info');       // false
+    $exists2 = $request->session()->exists('info'); // true
+
+    return view('session-test', compact('has1', 'exists1', 'has2', 'exists2'));
 });
 
-Route::get('/get', function(Request $request){
-    return $request->session()->get('message');
+Route::get('/session-all', function(Request $request){
+
+    $request->session()->put('info', 'Radhe Radhe');
+    $request->session()->put('user', 'Anshu');
+    $request->session()->put('role', 'admin');
+
+    $request->session()->forget('info');        //forget() → specific delete
+
+    $pulled = $request->session()->pull('user');    //pull() → nikalo + delete // Anshu
+
+    $request->session()->flush();               //flush() → sab uda do
+
+    return response()->json([
+        'pulled_user' => $pulled,
+        'has_info' => $request->session()->has('info'),     // false
+        'has_user' => $request->session()->has('user'),     // false
+        'has_role' => $request->session()->has('role'),     // false
+    ]);
+});
+
+// =============================================================================================== Localization
+
+Route::get('/lang', function(Request $request){
+    return view('lang');
 });
