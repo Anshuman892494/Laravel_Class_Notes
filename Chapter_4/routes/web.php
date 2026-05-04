@@ -321,3 +321,33 @@ Route::get('/session-all', function(Request $request){
 Route::get('/lang', function(Request $request){
     return view('lang');
 });
+
+
+Route::get('/lang/{locale}', function($locale){
+    Session::put('locale',$locale);
+    $value = Session::get('locale'); //getting the value of locale from sessions
+    App::setlocale($value);
+    return view('dynamic_lang');
+});
+
+
+// ================================================================================================
+
+// Route::get('/dash', function(){
+//     return view('dashboard');
+// });
+
+Route::get('/dash/{locale}', function($locale){
+    Session::put('locale',$locale);
+    $value = Session::get('locale'); //getting the value of locale from sessions
+    App::setlocale($value);
+    return view('dashboard',['locale'=>$locale]); //passing data dynamically for next page
+});
+
+
+Route::get('/about/{locale}', function($locale){
+    Session::put('locale',$locale);
+    $value = Session::get('locale'); //getting the value of locale from sessions
+    App::setlocale($value);
+    return view('about');
+});
