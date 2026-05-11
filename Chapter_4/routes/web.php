@@ -351,3 +351,34 @@ Route::get('/about/{locale}', function($locale){
     App::setlocale($value);
     return view('about');
 });
+
+
+
+// ========================================================================================== Chapter 5
+// ====================================================================================== Forms (Uploaded Files) 
+
+
+use App\Http\Controllers\formController;
+use App\Http\Controllers\Anshu;
+// Form Route
+// Route::get('/show-form', [formController::class, 'showform']);
+// Route::post('/submit-form', [formController::class, 'submitform']);
+
+// // File Upload Route
+// Route::get('/upload-form', [formController::class, 'showuploadform']);
+// Route::post('/upload-form', [formController::class, 'uploadform']);
+
+
+
+// =============================================================================================
+
+
+// Route::resource('Anshu', Anshu::class);
+// Route::get('/show', [formController::class, 'showform']);
+
+// ==================================================================================================
+
+
+// Form Route
+Route::get('/show-form', [formController::class, 'showform']);
+Route::post('/submit-form', [formController::class, 'submitform']);
