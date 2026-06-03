@@ -382,3 +382,151 @@ use App\Http\Controllers\Anshu;
 // Form Route
 Route::get('/show-form', [formController::class, 'showform']);
 Route::post('/submit-form', [formController::class, 'submitform']);
+
+
+// ==================================================================================================== Querry Builder DB
+// Route::get('/insert', function(){
+//     DB::table('sports')->insert([
+
+//     ]);
+// });
+
+
+// FOr inserting the data
+Route::get('/insert', function () {
+
+    DB::table('sports')->insert([
+
+        [
+            'sports_name' => 'Cricket',
+            'category' => 'Outdoor',
+            'no_of_players' => 11,
+            'description' => 'Bat and ball game',
+            'is_olympic' => false,
+            'date_of_sport' => '2026-05-21',
+        ],
+
+        [
+            'sports_name' => 'Football',
+            'category' => 'Outdoor',
+            'no_of_players' => 11,
+            'description' => 'World famous sport',
+            'is_olympic' => true,
+            'date_of_sport' => '2026-05-22',
+        ],
+
+        [
+            'sports_name' => 'Chess',
+            'category' => 'Indoor',
+            'no_of_players' => 2,
+            'description' => 'Mind strategy game',
+            'is_olympic' => false,
+            'date_of_sport' => '2026-05-23',
+        ]
+
+    ]);
+
+    return "Multiple Records Inserted";
+});
+
+
+// For getting all the data
+Route::get('/fetch-all', function(){
+    return DB::table('sports')->get();
+});
+
+
+// For getting filtered the data
+Route::get('/fetch-indoor', function(){
+    return DB::table('sports')->where('category', 'Indoor')->get();
+});
+
+
+// For getting sorted the data
+Route::get('/fetch-sorted', function(){
+    return DB::table('sports')->orderBy('sports_name')->get();
+});
+
+
+// For Updating the data
+Route::get('/update', function(){
+    // lets update the football player 11 to 15
+    return DB::table('sports')->where('id', 2)->update([
+        'no_of_players'=>11
+    ]);
+});
+
+
+// For Deleting the data
+Route::get('/delete', function(){
+    // lets delete the football sports
+    return DB::table('sports')->where('id', 2)->delete();
+});
+
+// For Deleting the database
+// Route::get('/truncate', function(){
+//     return DB::table('sports')->truncate();
+// });
+
+
+
+// ================================================================================= ORM
+use App\Models\Sport;
+
+
+//For inserting the data by ORM
+
+// it give this error
+// Illuminate\Database\Eloquent\MassAssignmentException
+// vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php:684
+// Add [sports_name] to fillable property to allow mass assignment on [App\Models\Sport].
+
+
+//by default we can not insert data in ORM so we use "PROTECTED $FILLABLE" and pass the ids of scema (sports_name, category etc) in Model file
+
+Route::get('/insert-orm', function () {
+
+    Sport::create([
+
+        'sports_name' => 'BGMI',
+        'category' => 'Indoor',
+        'no_of_players' => 4,
+        'description' => 'Video Game',
+        'is_olympic' => false,
+        'date_of_sport' => '2026-05-21',
+
+    ]);
+
+    return "Data Inserted Using ORM";
+});
+
+
+// For fetching data using ORM
+Route::get('fetch-all-orm', function(){
+    return Sport::all();
+});
+
+// for fetching a specific id
+Route::get('fetch-id-orm', function(){
+    return Sport::find(3);
+});
+
+// for fetching a specific condition - outdoor
+Route::get('fetch-outdoor-orm', function(){
+    return Sport::where('category', 'outdoor')->get();
+});
+
+
+//For updating the data using ORM
+Route::get('update-orm', function(){
+    Sport::find(3)->update([
+        'no_of_players'=>20
+    ]);
+    return 'Data Updated Successfully';
+});
+
+//For deleteing the data using ORM
+Route::get('delete-orm', function(){
+    Sport::find(1)->delete();
+    return 'Data Deleted Successfully';
+});
