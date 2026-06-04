@@ -19,30 +19,30 @@ Route::get('/', function () {
 // });
 
 //making named Route
-// Route::get('/anshu', function () {
-//     return view('anshu');
-// })->name('anshuman');//named as anshuman
+Route::get('/anshu', function () {
+    return view('anshu');
+})->name('anshuman');//named as anshuman
 
 
 // Domain Routing, URL Generation- The current URL
-// Route::domain('anshu.com')->group(function(){
+Route::domain('anshu.com')->group(function(){
     
-//     Route::get('/', function () {
-//         return redirect()->route('anshuman'); //called by named route
-//     });    
+    Route::get('/', function () {
+        return redirect()->route('anshuman'); //called by named route
+    });    
 
-//     Route::get('/dashboard', function(Request $request){
-//         // return url()->current();
-//         return [
-//             'path'=>$request->path(),
-//             'current'=>url()->current(),    
-//             'full'=>url()->full(),
-//             'previous'=>url()->previous()
-//         ];
-//     });
-// });
+    Route::get('/dashboard', function(Request $request){
+        return url()->full();
+        return [
+            'path'=>$request->path(),
+            'current'=>url()->current(),    
+            'full'=>url()->full(),
+            'previous'=>url()->previous()
+        ];
+    });
+});
 
-//Laravel me action() ka use hota hai controller ke method ka URL generate karne ke liye.
+// Laravel me action() ka use hota hai controller ke method ka URL generate karne ke liye.
 
 // use App\Http\Controllers\UserController;
 // Route::get('/user', [UserController::class, 'index']);
@@ -188,33 +188,33 @@ Route::domain('anshu.com')->group(function(){
 // Change Language	App::setLocale()
 
 
-// Route::get('/session', function (Request $request) {
+Route::get('/session', function (Request $request) {
 
-//     // store single
-//     $request->session()->put('name', 'Anshu');
+    // store single
+    $request->session()->put('name', 'Anshu');
 
-//     // store multiple
-//     $request->session()->put([
-//         'age' => 12,
-//         'section' => 'SO',
-//         'lang' => 'en'
-//     ]);
+    // store multiple
+    $request->session()->put([
+        'age' => 12,
+        'section' => 'SO',
+        'lang' => 'en'
+    ]);
 
-//     // initialize array
-//     $request->session()->put('city', []);
+    // initialize array
+    $request->session()->put('city', []);
 
-//     // push values
-//     $request->session()->push('city', 'Ludhiana');
-//     $request->session()->push('city', 'Jalandhar');
+    // push values
+    $request->session()->push('city', 'Ludhiana');
+    $request->session()->push('city', 'Jalandhar');
 
-//     // helper method
-//     session(['course' => 'PHP']);
+    // helper method
+    session(['course' => 'PHP']);
 
-//     return [
-//         'name' => $request->session()->get('name'),
-//         'all_data' => $request->session()->all()
-//     ];
-// });
+    return [
+        'name' => $request->session()->get('name'),
+        'all_data' => $request->session()->all()
+    ];
+});
 
 
 // Route::get('/set', function(Request $request){
@@ -529,4 +529,41 @@ Route::get('update-orm', function(){
 Route::get('delete-orm', function(){
     Sport::find(1)->delete();
     return 'Data Deleted Successfully';
+});
+
+
+
+// Redirects directly to a specific URL
+Route::get('/old-url', function () {
+    return redirect('/');
+});
+
+
+
+// 1. Defining a named route
+Route::get('/dashboard/home', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+// 2. Redirecting to the named route
+Route::get('/login-success', function () {
+    return redirect()->route('dashboard');
+});
+
+// 3. Redirecting with route parameters
+Route::get('/go-to-user/{id}', function ($id) {
+    return redirect()->route('user.profile', ['id' => $id]);
+});
+
+
+use App\Http\Controllers\UserController;
+
+Route::get('/user/{id}', [UserController::class, 'show']);
+Route::get('/profile', [UserController::class, 'show'])->middleware('auth');
+
+
+Route::domain('{account}.myapp.com')->group(function () {
+    Route::get('/user', function () {
+        return "Hello From Sub-domain";
+    });
 });
